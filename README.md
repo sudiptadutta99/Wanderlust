@@ -1,5 +1,5 @@
 # Wanderlust 🌍
-
+**LIVE AT**: https://wanderlust-soyx.onrender.com/listings
 Wanderlust is a web-based platform designed to facilitate the exploration and booking of accommodations. With robust features and an intuitive user experience, Wanderlust helps users seamlessly discover and book their next travel destination.
 
 ## Features
@@ -16,7 +16,7 @@ Wanderlust is a web-based platform designed to facilitate the exploration and bo
 - **Map Integration**  
   Integrated `Mapbox API` to enable accurate location-based features, allowing users to explore and book accommodations based on geographic data.
 
-**LIVE AT**: https://wanderlust-soyx.onrender.com/listings
+
 ## Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript  
