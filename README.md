@@ -1,5 +1,6 @@
 # Wanderlust 🌍
 **LIVE AT**: [WanderLust](https://wanderlust-soyx.onrender.com/listings)
+
 Wanderlust is a web-based platform designed to facilitate the exploration and booking of accommodations. With robust features and an intuitive user experience, Wanderlust helps users seamlessly discover and book their next travel destination.
 
 ## Features
