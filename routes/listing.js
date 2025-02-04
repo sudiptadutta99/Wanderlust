@@ -14,14 +14,21 @@ const upload = multer({ storage})
 
 router
     .route("/")
-    .get(wrapAsync(listingController.index))
-    .post( 
+    .get(wrapAsync(async (req, res, next) => {
+        try {
+            const allListings = await Listing.find(); // Fetch all listings
+            // Default searchResults to null if not defined (for the /listings route)
+            res.render('listings/index', { searchResults: null, allListings });
+        } catch (err) {
+            next(err);
+        }
+    }))
+    .post(
         isLoggedIn,
         upload.single('listing[image]'),
         validateListing, 
-
         wrapAsync(listingController.createListing)
-    )
+    );
     
 // New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);

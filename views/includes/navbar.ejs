@@ -33,12 +33,12 @@
 
         <!-- search bar -->
         <div class="navbar-nav ms-auto">
-          <form class="d-flex" role="search">
-            <input class="form-control me-2 search-inp" type="search" placeholder="Search Destinations" >
-            <button 
-              class="btn search-btn" 
-              type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-          </form>
+            <form class="d-flex" role="search" method="get" action="/search">
+                <input class="form-control me-2 search-inp" type="search" placeholder="Search Destinations" name="query" required>
+                <button class="btn search-btn" type="submit">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </form>
         </div>
 
         <div class="navbar-nav ms-auto">

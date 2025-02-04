@@ -25,7 +25,7 @@ const User = require("./models/user.js")
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-
+const searchRoutes = require('./routes/search.js');
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -117,6 +117,9 @@ app.use((err, req, res,next) => {
     res.status(statusCode).render("error.ejs", { err: { message } });
     // res.status(statusCode).send(message);
 })
+
+//search option
+app.use('/search', searchRoutes);
 
 
 app.listen(8080, () => {
