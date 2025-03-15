@@ -12,26 +12,23 @@ const listingSchema = new Schema({
         url: String,
         filename: String
     },
-    price: {
-        type: Number,
-        required: true
-    },
-    rentalType: {
-        type: String,
-        enum: ["hourly", "daily", "weekly", "subscription"],
-        required: true
-    },
+    price: Number,
     location: String,
     country: String,
+    rentalType: {
+        type: String,
+        enum: ["Hourly", "Daily", "Weekly", "Subscription"],
+        required: true
+    },
     reviews: [
         {
             type: Schema.Types.ObjectId,
             ref: "Review"
-        }
+        },
     ],
     owner: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
     },
     geometry: {
         type: {
@@ -46,7 +43,6 @@ const listingSchema = new Schema({
     }
 });
 
-// Middleware to delete associated reviews when a listing is deleted
 listingSchema.post("findOneAndDelete", async (listing) => {
     if (listing) {
         await Review.deleteMany({ _id: { $in: listing.reviews } });
