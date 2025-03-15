@@ -1,6 +1,6 @@
 const mongoose  = require("mongoose");
 const Schema = mongoose.Schema;
-const Review = require("./review.js")
+const Review = require("./review.js");
 
 const listingSchema = new Schema({
     title: {
@@ -12,42 +12,58 @@ const listingSchema = new Schema({
        url: String,
        filename: String
     },
-    price: Number,
     location: String,
     country: String,
-    reviews: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Review"
-        },
-    ],
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User",
     },
     geometry: {
         type: {
-            type: String, // Don't do `{ location: { type: String } }`
-            enum: ['Point'], // 'location.type' must be 'Point'
+            type: String,
+            enum: ['Point'],
             required: true
-          },
-          coordinates: {
+        },
+        coordinates: {
             type: [Number],
             required: true
-          }
+        }
     },
-    // category : {
-    //     type: String,
-    //     enum :[]
-    // }
+    price: Number, // Base price (for reference)
+
+    // New Rental Options Field
+    rentalOptions: {
+        type: [
+            {
+                type: String,
+                enum: ["hourly", "daily", "weekly", "subscription"], 
+                required: true
+            }
+        ],
+        default: ["daily"] // Default rental type is daily
+    },
+    rentalPrices: {
+        hourly: { type: Number, default: null },
+        daily: { type: Number, default: null },
+        weekly: { type: Number, default: null },
+        subscription: { type: Number, default: null }
+    },
+
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Review"
+        },
+    ],
 });
 
-//post mongoose middle ware for deleteing listing from db
+// Middleware to delete associated reviews when a listing is deleted
 listingSchema.post("findOneAndDelete", async(listing) => {
     if(listing) {
         await Review.deleteMany({_id: {$in: listing.reviews}});
     }
-})
+});
 
 const Listing  = mongoose.model("Listing", listingSchema);
 module.exports = Listing;
+
