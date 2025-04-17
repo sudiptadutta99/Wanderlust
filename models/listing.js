@@ -1,25 +1,29 @@
-const mongoose = require("mongoose");
+const mongoose  = require("mongoose");
 const Schema = mongoose.Schema;
-const Review = require("./review.js");
+const Review = require("./review.js")
 
 const listingSchema = new Schema({
     title: {
-        type: String,
-        required: true
+       type: String,
+       required: true 
     },
     description: String,
     image: {
-        url: String,
-        filename: String
+       url: String,
+       filename: String
     },
     price: Number,
     location: String,
     country: String,
+
+    // ✅ NEW FIELDS for Flexible Rental Models
     rentalType: {
         type: String,
-        enum: ["Hourly", "Daily", "Weekly", "Subscription"],
-        required: true
+        enum: ['Hourly', 'Daily', 'Weekly', 'Monthly'],
+        default: 'Daily'
     },
+    pricePerUnit: Number,
+
     reviews: [
         {
             type: Schema.Types.ObjectId,
@@ -32,24 +36,29 @@ const listingSchema = new Schema({
     },
     geometry: {
         type: {
-            type: String,
-            enum: ['Point'],
+            type: String, // Don't do `{ location: { type: String } }`
+            enum: ['Point'], // 'location.type' must be 'Point'
             required: true
-        },
-        coordinates: {
+          },
+          coordinates: {
             type: [Number],
             required: true
-        }
-    }
+          }
+    },
+    // category : {
+    //     type: String,
+    //     enum :[]
+    // }
 });
 
-listingSchema.post("findOneAndDelete", async (listing) => {
-    if (listing) {
-        await Review.deleteMany({ _id: { $in: listing.reviews } });
+//post mongoose middleware for deleting listing from db
+listingSchema.post("findOneAndDelete", async(listing) => {
+    if(listing) {
+        await Review.deleteMany({_id: {$in: listing.reviews}});
     }
-});
+})
 
-const Listing = mongoose.model("Listing", listingSchema);
+const Listing  = mongoose.model("Listing", listingSchema);
 module.exports = Listing;
 
 
