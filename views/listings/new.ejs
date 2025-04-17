@@ -57,17 +57,26 @@
                 <div class="invalid-feedback">Location should be valid</div>
             </div>
             
+            <!-- ✅ Rental Type Dropdown -->
             <div class="mb-3">
                 <label for="rentalType" class="form-label">Rental Type</label>
                 <select name="listing[rentalType]" class="form-control" required>
-                    <option value="hourly">Hourly</option>
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="subscription">Subscription</option>
+                    <option value="Hourly">Hourly</option>
+                    <option value="Daily" selected>Daily</option>
+                    <option value="Weekly">Weekly</option>
+                    <option value="Monthly">Monthly</option>
                 </select>
+            </div>
+
+            <!-- ✅ Price Per Unit Input -->
+            <div class="mb-3">
+                <label for="pricePerUnit" class="form-label">Price Per Unit</label>
+                <input type="number" name="listing[pricePerUnit]" step="0.01" placeholder="Enter price per unit (e.g. 50 per hour)" class="form-control" required>
+                <div class="invalid-feedback">Please enter the price per selected rental type</div>
             </div>
             
             <button class="btn btn-dark add-btn mt-3">Add</button>
         </form>
     </div>
 </div>
+
