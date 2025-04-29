@@ -22,8 +22,17 @@
                 <p class="card-text"><%= listing.location %> <br></p>
                 <p class="card-text"><%= listing.country %> <br></p>
 
-                
+                <!-- Pay with Crypto Button -->
+                <form action="/create-payment" method="POST" class="mt-3">
+                    <input type="hidden" name="amount" value="<%= listing.price %>"> 
+                    <button type="submit" class="btn btn-success w-100">
+                        <h5 class="mt-4">Book This Stay</h5>
+
+                    </button>
+                </form>
+
             </div>
+
         </div>
         
         <br>

@@ -5,6 +5,10 @@ if(process.env.NODE_ENV != "production") {
 
 const express = require("express");
 const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 const mongoose = require('mongoose');
 const Listing  = require("./models/listing.js")
 const path = require("path");
@@ -25,6 +29,9 @@ const User = require("./models/user.js")
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const paymentRoutes = require('./routes/payment');
+
+app.use('/', paymentRoutes);
 
 
 const dbUrl = process.env.ATLASDB_URL;
