@@ -23,12 +23,16 @@ module.exports.showListing = async(req, res) => {
                 path: "author",
             },
         })
-        .populate("owner");
-    //if our listing was deleted or do not exits currently
+        .populate({
+            path: "owner",
+            select: "username email"
+        });
+
     if(!listing) {
         req.flash("error", "Listing you requested does not exist");
-        res.redirect(("/listings"))
+        return res.redirect("/listings");
     }
+
     res.render("listings/show.ejs", { listing });
 }
 
