@@ -9,9 +9,9 @@ module.exports.createPayment = async (req, res) => {
     try {
         const response = await axios.post('https://api.nowpayments.io/v1/invoice', {
             price_amount: amount,
-            price_currency: 'usd',
+            price_currency: 'inr',
             pay_currency: 'eth',
-            order_description: 'Payment for Wanderbnb Booking'
+            order_description: 'Payment for wanderlust Booking'
         }, {
             headers: {
                 'x-api-key': apiKey,
