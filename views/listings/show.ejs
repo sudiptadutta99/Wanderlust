@@ -39,6 +39,17 @@
       <button class="btn btn-outline-dark">Message Host</button>
     </div>
 
+    <!-- edit & delete -->
+     <!-- Edit/Delete Buttons (add here) -->
+<% if (currUser && listing.owner && currUser._id.toString() === listing.owner._id.toString()) { %>
+    <div class="mt-3">
+      <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning">Edit</a>
+      <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+        <button class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  <% } %>
+
     <!-- Map -->
     <div class="mt-4">
       <h3>Where you'll be</h3>
