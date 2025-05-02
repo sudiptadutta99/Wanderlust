@@ -5,9 +5,25 @@ const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 //controller for listings
 module.exports.index = async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index", { allListings });
+    const { search, category } = req.query;
+    let filter = {};
+
+    if (search) {
+        filter.$or = [
+            { title: new RegExp(search, "i") },
+            { location: new RegExp(search, "i") }
+        ];
+    }
+
+    if (category) {
+        filter.category = category;
+    }
+
+    const allListings = await Listing.find(filter);
+    res.render("listings/index", { allListings, selectedCategory: category });
 };
+
+
 
 module.exports.renderNewForm = (req, res) => {
     res.render("listings/new.ejs");
@@ -38,28 +54,35 @@ module.exports.showListing = async(req, res) => {
 
 //post
 module.exports.createListing = async (req, res, next) => {
-    let response  = await geocodingClient
+
+     // 🟨 Log the incoming data
+     console.log(req.body.listing);
+
+    let response = await geocodingClient
         .forwardGeocode({
             query: req.body.listing.location,
             limit: 1,
         })
-        .send()
-        
+        .send();
 
     let url = req.file.path;
-    let filename  = req.file.filename;
+    let filename = req.file.filename;
 
-    // Removed the unnecessary commented code for clarity
+    // Create the new listing and include category
     const newListing = new Listing(req.body.listing);
-    //adding owner to new Listing
     newListing.owner = req.user._id;
-    newListing.image = {url, filename};
+    newListing.image = { url, filename };
     newListing.geometry = response.body.features[0].geometry;
 
-    let savedListing = await newListing.save();
-    req.flash("success", "new listing Created");
-    res.redirect("/listings");
-}
+    try {
+        let savedListing = await newListing.save();
+        req.flash("success", "New listing created");
+        res.redirect("/listings");
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 //edit
 module.exports.renderEditForm = async (req, res) => {

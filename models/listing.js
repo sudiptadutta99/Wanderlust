@@ -36,10 +36,17 @@ const listingSchema = new Schema({
             required: true
           }
     },
-    // category : {
-    //     type: String,
-    //     enum :[]
-    // }
+    category: {
+        type: String,
+        enum: ["Beds", "Cities", "Mountains", "Castles", 
+            "Pools", "Camps", "Farms", "Arctic", "Domes", "Boats", "Cabins", 
+            "Lakes", "Hotels", "Beaches", "Apartments"],
+
+        required: true, // Ensure this is set if you want to make it mandatory
+    }
+      
+
+      
 });
 
 //post mongoose middle ware for deleteing listing from db
