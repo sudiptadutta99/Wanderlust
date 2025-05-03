@@ -136,12 +136,16 @@
         </div>
     
         <form>
-        <div class="date-picker">
-            <label>Check-in</label>
-            <input type="date" value="2025-05-11" />
-            <label>Checkout</label>
-            <input type="date" value="2025-05-16" />
-        </div>
+            <% const today = new Date().toISOString().split("T")[0]; %>
+
+            <div class="date-picker">
+                <label>Check-in</label>
+                <input type="date" name="checkin" min="<%= today %>" required />
+                
+                <label>Checkout</label>
+                <input type="date" name="checkout" min="<%= today %>" required />
+            </div>
+            
     
         <div class="guest-picker">
             <label>Guests</label>
