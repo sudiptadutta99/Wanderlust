@@ -81,6 +81,9 @@ const sessionOptions = {
     }
 };
 
+
+
+
 //root path
 // app.get("/", (req,res) => {
 //     res.send("root");
@@ -104,6 +107,9 @@ app.use((req, res, next) => {
     next();
 })
 
+//payment routes
+const policyRoutes = require('./routes/policies');
+app.use('/', policyRoutes);
 
 //lsitings route
 app.use("/listings", listingRouter);

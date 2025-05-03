@@ -1,86 +1,22 @@
-/* Footer Styling */
-.footer {
-    background-color: #f7f7f7;  /* Light grey background */
-    border: 1px solid #ddd;  /* Light border around the entire footer */
-    padding: 40px 20px;  /* Add padding to give space inside the footer */
-    margin-top: 40px;  /* Add margin to separate from content above */
-    font-size: 0.9rem;
-    color: #333;
-    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
-}
-
-.footer-top {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
-
-.footer-column {
-    width: 22%;
-    min-width: 220px;
-    margin-bottom: 30px;
-}
-
-.footer-column h5 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-column ul li {
-    margin: 8px 0;
-}
-
-.footer-column ul li a {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.2s, text-decoration 0.3s;
-}
-
-.footer-column ul li a:hover {
-    color: #fe424d;
-    text-decoration: underline; /* Underline on hover */
-}
-
-.social-icons i {
-    font-size: 20px;
-    color: #333;
-    margin-right: 10px;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-.social-icons i:hover {
-    color: #fe424d;
-}
-
 .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
-
-.footer-info p {
-    font-size: 0.85rem;
+    padding: 20px 40px;
+    flex-wrap: wrap;
 }
 
 .footer-links a {
     color: #333;
-    margin-left: 15px;
+    margin: 0 10px;
     text-decoration: none;
     font-size: 0.85rem;
     transition: color 0.2s, text-decoration 0.3s;
 }
 
 .footer-links a:hover {
-    color: #fe424d;
-    text-decoration: underline; /* Underline on hover */
+    color: #fe424d !important;
+    text-decoration: underline;
+    text-shadow: 0 0 2px rgba(254, 66, 77, 0.5);
 }
