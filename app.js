@@ -30,6 +30,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const paymentRoutes = require('./routes/payment');
+const bookingRoutes = require("./routes/bookings");
 
 app.use('/', paymentRoutes);
 
@@ -107,7 +108,7 @@ app.use((req, res, next) => {
     next();
 })
 
-//payment routes
+//policy routes
 const policyRoutes = require('./routes/policies');
 app.use('/', policyRoutes);
 
@@ -117,6 +118,9 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 //user Route
 app.use("/", userRouter)
+//payment routes
+app.use("/bookings", bookingRoutes);
+
 
 //a standard response for other routes
 app.all("*", (req, res, next)=> {

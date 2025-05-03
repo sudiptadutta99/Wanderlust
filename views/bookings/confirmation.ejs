@@ -1,0 +1,9 @@
+<h1>Booking Confirmed!</h1>
+<p>Booking ID: <strong><%= booking.bookingId %></strong></p>
+<p>Listing: <%= booking.listing.title %></p>
+<p>Check-in: <%= booking.checkin.toDateString() %></p>
+<p>Checkout: <%= booking.checkout.toDateString() %></p>
+<p>Guests: <%= booking.guests %></p>
+<p>Total: ₹<%= booking.totalPrice %></p>
+<p>Payment Method: <%= booking.paymentMethod %></p>
+<p>Status: <%= booking.paymentStatus %></p>

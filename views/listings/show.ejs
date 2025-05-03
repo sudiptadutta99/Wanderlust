@@ -135,9 +135,10 @@
         <span class="discounted-price">&#8377;<%= discountedPrice.toLocaleString("en-IN") %></span> <span class="per-night">night</span>
         </div>
     
-        <form>
-            <% const today = new Date().toISOString().split("T")[0]; %>
-
+        <form action="/bookings/create" method="POST">
+            <!-- Pass 'today' from the controller -->
+            <input type="hidden" name="listingId" value="<%= listing._id %>" />
+            
             <div class="date-picker">
                 <label>Check-in</label>
                 <input type="date" name="checkin" min="<%= today %>" required />
@@ -145,20 +146,28 @@
                 <label>Checkout</label>
                 <input type="date" name="checkout" min="<%= today %>" required />
             </div>
-            
-    
-        <div class="guest-picker">
-            <label>Guests</label>
-            <select>
-            <option>1 guest</option>
-            <option>2 guests</option>
-            <option>3 guests</option>
-            </select>
-        </div>
-    
-        <button type="submit" class="reserve-btn">Reserve</button>
-        <p class="disclaimer">You won't be charged yet</p>
+        
+            <div class="guest-picker">
+                <label>Guests</label>
+                <select name="guests">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                </select>
+            </div>
+        
+            <div class="payment-method">
+                <label>Payment Method:</label>
+                <select name="paymentMethod" required>
+                    <option value="cash">Cash at Hotel</option>
+                    <option value="upi">UPI (Razorpay)</option>
+                </select>
+            </div>
+        
+            <button type="submit" class="reserve-btn">Reserve</button>
+            <p class="disclaimer">You won't be charged yet</p>
         </form>
+        
     
         <div class="price-breakdown">
         <div>

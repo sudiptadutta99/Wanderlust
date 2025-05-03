@@ -35,7 +35,7 @@ module.exports.showListing = async(req, res) => {
     const listing = await Listing.findById(id)
         .populate({
             path: "reviews",
-            populate : {
+            populate: {
                 path: "author",
             },
         })
@@ -44,13 +44,16 @@ module.exports.showListing = async(req, res) => {
             select: "username email"
         });
 
-    if(!listing) {
+    if (!listing) {
         req.flash("error", "Listing you requested does not exist");
         return res.redirect("/listings");
     }
 
-    res.render("listings/show.ejs", { listing });
+    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
+
+    res.render("listings/show.ejs", { listing, today }); // Pass `today` to the view
 }
+
 
 //post
 module.exports.createListing = async (req, res, next) => {
