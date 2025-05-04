@@ -28,16 +28,38 @@
 
     <!-- Host -->
     <div class="mt-4 p-4 border rounded bg-light">
-      <h3>Meet your host</h3>
-      <div class="d-flex align-items-center mb-3">
-        <i class="fa-solid fa-user-circle fa-2x me-3"></i>
-        <h5 class="mb-0"><%= listing.owner.username %></h5>
+        <h3>Meet your host</h3>
+        <div class="d-flex align-items-center mb-3">
+          <i class="fa-solid fa-user-circle fa-2x me-3"></i>
+          <h5 class="mb-0"><%= listing.owner.username %></h5>
+        </div>
+        <p><strong>Email:</strong> <%= listing.owner.email %></p>
+      
+        <% 
+          const reviews = Math.floor(Math.random() * 10) + 1;
+          const rating = (Math.random() * 1 + 4).toFixed(2);
+          const yearsHosting = Math.floor(Math.random() * 5) + 1;
+      
+          const messages = [
+            `Hi, I'm ${listing.owner.username} and I love hosting travelers from all around the world.`,
+            `Welcome! This is ${listing.owner.username}'s cozy space — feel free to reach out anytime.`,
+            `Hello! I'm ${listing.owner.username}, happy to host you here.`,
+            `Hey there! This is ${listing.owner.username}'s place, enjoy your stay.`,
+            `${listing.owner.username} here! Looking forward to making your trip great.`
+          ];
+      
+          const randomIndex = Math.floor(Math.random() * messages.length);
+        %>
+      
+        <p><strong>Superhost</strong> · <%= reviews %> reviews · <%= rating %> rating · <%= yearsHosting %> years hosting</p>
+        <p><%= messages[randomIndex] %></p>
+      
+        <a href="mailto:<%= listing.owner.email %>" class="btn btn-outline-dark">Message Host</a>
       </div>
-      <p><strong>Email:</strong> <%= listing.owner.email %></p>
-      <p><strong>Superhost</strong> · 251 reviews · 4.98 rating · 4 years hosting</p>
-      <p>Hello, We are Ben & Vicky and we live on Radmore Farm in Litchborough...</p>
-      <button class="btn btn-outline-dark">Message Host</button>
-    </div>
+      
+      
+      
+      
 
     <!-- edit & delete -->
      <!-- Edit/Delete Buttons (add here) -->
@@ -136,37 +158,40 @@
         </div>
     
         <form action="/bookings/create" method="POST">
-            <!-- Pass 'today' from the controller -->
-            <input type="hidden" name="listingId" value="<%= listing._id %>" />
-            
+            <input type="hidden" name="listingId" value="<%= listing._id %>">
+        
+            <% const today = new Date().toISOString().split("T")[0]; %>
+        
             <div class="date-picker">
                 <label>Check-in</label>
-                <input type="date" name="checkin" min="<%= today %>" required />
-                
+                <input type="date" name="checkin" min="<%= today %>" required>
+        
                 <label>Checkout</label>
-                <input type="date" name="checkout" min="<%= today %>" required />
+                <input type="date" name="checkout" min="<%= today %>" required>
             </div>
         
             <div class="guest-picker">
                 <label>Guests</label>
-                <select name="guests">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+                <select name="guests" required>
+                    <option value="1">1 guest</option>
+                    <option value="2">2 guests</option>
+                    <option value="3">3 guests</option>
+                    <option value="4">4 guests</option>
                 </select>
             </div>
         
             <div class="payment-method">
-                <label>Payment Method:</label>
+                <label>Payment Method</label>
                 <select name="paymentMethod" required>
-                    <option value="cash">Cash at Hotel</option>
-                    <option value="upi">UPI (Razorpay)</option>
+                    <option value="cash">Cash</option>
+                    <option value="upi">UPI</option>
                 </select>
             </div>
         
             <button type="submit" class="reserve-btn">Reserve</button>
             <p class="disclaimer">You won't be charged yet</p>
         </form>
+        
         
     
         <div class="price-breakdown">

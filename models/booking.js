@@ -1,28 +1,47 @@
 const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  listing: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Listing",
-  },
-  checkin: Date,
-  checkout: Date,
-  guests: Number,
-  totalPrice: Number,
-  paymentMethod: String, // "cash" or "upi"
-  paymentStatus: {
-    type: String,
-    default: "pending", // "pending", "paid"
-  },
-  bookingId: String,
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+    listing: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Listing",
+        required: true,
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    checkin: {
+        type: Date,
+        required: true,
+    },
+    checkout: {
+        type: Date,
+        required: true,
+    },
+    guests: {
+        type: Number,
+        required: true,
+    },
+    totalPrice: {
+        type: Number,
+        required: true,
+    },
+    paymentMethod: {
+        type: String,
+        enum: ["upi", "cash", "card"], // Add other methods if needed
+        required: true,
+    },
+    paymentStatus: {
+        type: String,
+        enum: ["pending", "initiated", "paid", "failed"],
+        default: "pending",
+    },
+    bookingId: {
+        type: String,
+        required: true,
+        unique: true,
+    },
 });
 
 module.exports = mongoose.model("Booking", bookingSchema);

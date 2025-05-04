@@ -122,6 +122,7 @@ app.use("/", userRouter)
 app.use("/bookings", bookingRoutes);
 
 
+
 //a standard response for other routes
 app.all("*", (req, res, next)=> {
     next(new ExpressError(404, "Page not found "));
