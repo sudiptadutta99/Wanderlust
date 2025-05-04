@@ -74,7 +74,28 @@ module.exports.createBooking = async (req, res) => {
             order_id: payment.id,
             bookingId: newBooking._id,
         });
-    } else {
+    } else if (paymentMethod === "crypto") {
+        const axios = require('axios');
+        const response = await axios.post(
+            'https://api.nowpayments.io/v1/invoice',
+            {
+                price_amount: totalPrice,
+                price_currency: 'usd',
+                pay_currency: 'eth',
+                order_description: 'Payment for Wanderbnb Booking',
+            },
+            {
+                headers: {
+                    'x-api-key': process.env.NOWPAYMENTS_API_KEY,
+                    'Content-Type': 'application/json',
+                }
+            }
+        );
+    
+        const paymentUrl = response.data.invoice_url;
+        res.redirect(paymentUrl);
+    }
+    else {
         res.redirect(`/bookings/${newBooking._id}/confirmation`);
     }
 };
