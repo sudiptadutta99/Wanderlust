@@ -1,92 +1,92 @@
 <style>
-  .search-btn {
-    background-color: #fe424d;
-    color: #fff;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-
-  }
-  .search-inp  {
-    border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
-    font-size: 1rem;
-  }
-</style>
-
-
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-      <button 
-        class="navbar-toggler" 
-        type="button" 
-        data-bs-toggle="collapse" 
-        data-bs-target="#navbarNavAltMarkup" 
-        >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-        <div class="navbar-nav">
-          <a class="nav-link" href="/listings">Explore</a>
-        </div>
-
-        <!-- search bar -->
-        <form class="d-flex" role="search" method="GET" action="/listings">
-            <input
-              class="form-control me-2 search-inp"
-              type="search"
-              name="search"
-              placeholder="Search Destinations">
-            <button class="btn search-btn" type="submit">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </form>
-          
-          
-
-        <!-- Right-side Hamburger/Profile Dropdown -->
-        <div class="navbar-nav ms-auto">
-            <% if (currUser) { %>
-            <div class="nav-item dropdown">
-                <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="userMenu"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >
-                <i class="fa-solid fa-bars"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                <li><a class="dropdown-item" href="/listings/new">Create New Listing</a></li>
-                <li><a class="dropdown-item" href="/bookings">My Bookings</a></li>
-                <li><a class="dropdown-item" href="/account">My Account</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                </ul>
-            </div>
-            <% } else { %>
-            <div class="nav-item dropdown">
-                <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="guestMenu"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >
-                <i class="fa-solid fa-bars"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="guestMenu">
-                <li><a class="dropdown-item" href="/signup">Signup</a></li>
-                <li><a class="dropdown-item" href="/login">Login</a></li>
-                </ul>
-            </div>
-            <% } %>
-        </div>
+    .search-btn {
+      background-color: #fe424d;
+      color: #fff;
+      border-radius: 25px;
+      padding: 0 1rem 0 1rem;
   
+    }
+    .search-inp  {
+      border-radius: 25px;
+      padding: 0.5rem 3rem 0.5rem 3rem;
+      font-size: 1rem;
+    }
+  </style>
+  
+  
+  <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+        <button 
+          class="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarNavAltMarkup" 
+          >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  
+          <div class="navbar-nav">
+            <a class="nav-link" href="/listings">Explore</a>
+          </div>
+  
+          <!-- search bar -->
+          <form class="d-flex" role="search" method="GET" action="/listings">
+              <input
+                class="form-control me-2 search-inp"
+                type="search"
+                name="search"
+                placeholder="Search Destinations">
+              <button class="btn search-btn" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </form>
+            
+            
+  
+          <!-- Right-side Hamburger/Profile Dropdown -->
+          <div class="navbar-nav ms-auto">
+              <% if (currUser) { %>
+              <div class="nav-item dropdown">
+                  <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userMenu"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  >
+                  <i class="fa-solid fa-bars"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                  <li><a class="dropdown-item" href="/listings/new">Create New Listing</a></li>
+                  <li><a class="dropdown-item" href="/bookings">My Bookings</a></li>
+                  <li><a class="dropdown-item" href="/account">My Account</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                  </ul>
+              </div>
+              <% } else { %>
+              <div class="nav-item dropdown">
+                  <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="guestMenu"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  >
+                  <i class="fa-solid fa-bars"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="guestMenu">
+                  <li><a class="dropdown-item" href="/signup">Signup</a></li>
+                  <li><a class="dropdown-item" href="/login">Login</a></li>
+                  </ul>
+              </div>
+              <% } %>
+          </div>
+    
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
