@@ -3,14 +3,14 @@
 <link rel="stylesheet" href="/css/showListing.css">
 
 <script>
-    const mapToken = "<%= process.env.MAP_TOKEN %>";
-    const listing = JSON.parse('<%- JSON.stringify(listing) %>');
+  const mapToken = "<%= process.env.MAP_TOKEN %>";
+  const listing = JSON.parse('<%- JSON.stringify(listing) %>');
 </script>
 
 <div class="listing-container">
+
   <!-- LEFT: Listing Content -->
   <div class="listing-details">
-    <!-- Title, Image, Description -->
     <h2><%= listing.title %></h2>
 
     <div class="card show-card listing-card">
@@ -19,10 +19,8 @@
         <p class="card-text"><%= listing.description %></p>
         <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %> / night</p>
         <p class="card-text"><%= listing.location %>, <%= listing.country %></p>
-        <form action="/create-payment" method="POST">
-          <input type="hidden" name="amount" value="<%= listing.price %>"> 
-          <button type="submit" class="btn btn-airbnb w-100">Book This Stay</button>
-        </form>
+
+        
       </div>
     </div>
 
@@ -34,21 +32,35 @@
         <h5 class="mb-0"><%= listing.owner.username %></h5>
       </div>
       <p><strong>Email:</strong> <%= listing.owner.email %></p>
-      <p><strong>Superhost</strong> · 251 reviews · 4.98 rating · 4 years hosting</p>
-      <p>Hello, We are Ben & Vicky and we live on Radmore Farm in Litchborough...</p>
-      <button class="btn btn-outline-dark">Message Host</button>
+
+      <% 
+        const reviews = Math.floor(Math.random() * 10) + 1;
+        const rating = (Math.random() * 1 + 4).toFixed(2);
+        const yearsHosting = Math.floor(Math.random() * 5) + 1;
+        const messages = [
+          `Hi, I'm ${listing.owner.username} and I love hosting travelers from all around the world.`,
+          `Welcome! This is ${listing.owner.username}'s cozy space — feel free to reach out anytime.`,
+          `Hello! I'm ${listing.owner.username}, happy to host you here.`,
+          `Hey there! This is ${listing.owner.username}'s place, enjoy your stay.`,
+          `${listing.owner.username} here! Looking forward to making your trip great.`
+        ];
+        const randomIndex = Math.floor(Math.random() * messages.length);
+      %>
+
+      <p><strong>Superhost</strong> · <%= reviews %> reviews · <%= rating %> rating · <%= yearsHosting %> years hosting</p>
+      <p><%= messages[randomIndex] %></p>
+      <a href="mailto:<%= listing.owner.email %>" class="btn btn-outline-dark">Message Host</a>
     </div>
 
-    <!-- edit & delete -->
-     <!-- Edit/Delete Buttons (add here) -->
-<% if (currUser && listing.owner && currUser._id.toString() === listing.owner._id.toString()) { %>
-    <div class="mt-3">
-      <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning">Edit</a>
-      <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
-        <button class="btn btn-danger">Delete</button>
-      </form>
-    </div>
-  <% } %>
+    <!-- Edit/Delete -->
+    <% if (currUser && listing.owner && currUser._id.toString() === listing.owner._id.toString()) { %>
+      <div class="mt-3">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-warning">Edit</a>
+        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+          <button class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    <% } %>
 
     <!-- Map -->
     <div class="mt-4">
@@ -56,130 +68,192 @@
       <div id="map"></div>
     </div>
 
-    <br>
     <!-- What this place offers -->
-<div class="col-8 offset-2 mb-4 p-4 border rounded" style="background-color: #f8f8f8; margin-left: 0;">
-    <h3>What this place offers</h3>
-    <div class="row">
-      <div class="col-md-6">
-        <p><i class="fa-solid fa-utensils me-2"></i> Kitchen</p>
-        <p><i class="fa-solid fa-car me-2"></i> Free parking on premises</p>
-        <p><i class="fa-solid fa-dog me-2"></i> Pets allowed</p>
-        <p><i class="fa-solid fa-door-open me-2"></i> Private patio or balcony</p>
-      </div>
-      <div class="col-md-6">
-        <p><i class="fa-solid fa-fire me-2"></i> Indoor fireplace: wood-burning</p>
-        <p><i class="fa-solid fa-fire-burner me-2"></i> Firepit</p>
-        <p><i class="fa-solid fa-snowflake me-2"></i> Fridge</p>
+    <div class="col-8 offset-2 mb-4 p-4 border rounded" style="background-color: #f8f8f8; margin-left: 0;">
+      <h3>What this place offers</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <p><i class="fa-solid fa-utensils me-2"></i> Kitchen</p>
+          <p><i class="fa-solid fa-car me-2"></i> Free parking on premises</p>
+          <p><i class="fa-solid fa-dog me-2"></i> Pets allowed</p>
+          <p><i class="fa-solid fa-door-open me-2"></i> Private patio or balcony</p>
+        </div>
+        <div class="col-md-6">
+          <p><i class="fa-solid fa-fire me-2"></i> Indoor fireplace: wood-burning</p>
+          <p><i class="fa-solid fa-fire-burner me-2"></i> Firepit</p>
+          <p><i class="fa-solid fa-snowflake me-2"></i> Fridge</p>
+        </div>
       </div>
     </div>
-  </div>
-  
-    
 
     <!-- Reviews -->
-    <% if(currUser) { %>
-    <hr />
-    <h4>Leave a review</h4>
-    <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
-      <!-- Rating -->
-      <div class="mb-3">
-        <label class="form-label">Rating</label>
-        <fieldset class="starability-slot">
-          <!-- Stars here -->
-        </fieldset>
-      </div>
-      <!-- Comment -->
-      <div class="mb-3">
-        <label class="form-label">Comments</label>
-        <textarea name="review[comment]" class="form-control" required></textarea>
-        <div class="invalid-feedback">Please add some comments</div>
-      </div>
-      <button class="btn btn-outline-dark">Submit</button>
-    </form>
-    <hr />
-    <% } %>
-
-    <% if(listing.reviews.length > 0) { %>
-      <h4>All Reviews</h4>
-      <% for(let review of listing.reviews) { %>
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5>@<%= review.author.username %></h5>
-            <p data-rating="<%= review.rating %>"></p>
-            <p><%= review.comment %></p>
-            <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-              <button class="btn btn-sm btn-dark">Delete</button>
+        <% if(currUser) { %>
+            <hr />
+            <h4>Leave a review</h4>
+            <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label class="form-label">Rating</label>
+                <div class="star-rating">
+                <% for (let i = 5; i >= 1; i--) { %>
+                    <input type="radio" id="star<%= i %>" name="review[rating]" value="<%= i %>" required />
+                    <label for="star<%= i %>" title="<%= i %> stars">
+                    <i class="fas fa-star"></i>
+                    </label>
+                <% } %>
+                </div>
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Comments</label>
+                <textarea name="review[comment]" class="form-control" required></textarea>
+                <div class="invalid-feedback">Please add some comments</div>
+            </div>
+            <button class="btn btn-outline-dark">Submit</button>
             </form>
-          </div>
-        </div>
-      <% } %>
-    <% } %>
+            <hr />
+        <% } %>
+        
+        <% if(listing.reviews.length > 0) { %>
+            <h4>All Reviews</h4>
+            <% for (let review of listing.reviews) { %>
+            <div class="card mb-3">
+                <div class="card-body">
+                <h5>@<%= review.author.username %></h5>
+        
+                <!-- Display Rating -->
+                <div class="star-rating">
+                    <% for (let i = 5; i >= 1; i--) { %>
+                    <i class="fas fa-star <%= review.rating >= i ? 'filled' : '' %>"></i>
+                    <% } %>
+                </div>
+        
+                <!-- Review Comment -->
+                <p><%= review.comment %></p>
+        
+                <!-- Delete Button (if the review belongs to current user) -->
+                <% if(currUser && currUser._id.toString() === review.author._id.toString()) { %>
+                    <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                    <button class="btn btn-sm btn-dark">Delete</button>
+                    </form>
+                <% } %>
+                </div>
+            </div>
+            <% } %>
+        <% } %>
+  
   </div>
 
-    <!-- Right Side: Booking Section -->
-    <div class="booking-box">
-        <%
-        const originalPrice = listing.price;
-        const discountedPrice = Math.round(originalPrice * 0.8);
-        const numberOfNights = 5;
-        const totalBeforeDiscount = originalPrice * numberOfNights;
-        const discountAmount = originalPrice - discountedPrice;
-        const totalDiscount = discountAmount * numberOfNights;
-        const serviceFee = Math.round(originalPrice * 0.1); // fixed fee = 1 night at discounted rate
-        const finalTotal = totalBeforeDiscount - totalDiscount + serviceFee;
-        %>
-    
-        <div class="price-info">
-        <span class="original-price">&#8377;<%= originalPrice.toLocaleString("en-IN") %></span>
-        <span class="discounted-price">&#8377;<%= discountedPrice.toLocaleString("en-IN") %></span> <span class="per-night">night</span>
-        </div>
-    
-        <form>
-            <% const today = new Date().toISOString().split("T")[0]; %>
+  <!-- RIGHT: Booking Section -->
+  <div class="booking-box">
+    <div class="price-info">
+      <span class="discounted-price">&#8377;<%= listing.price.toLocaleString("en-IN") %></span>
+      <span class="per-night">/ night</span>
+    </div>
 
-            <div class="date-picker">
-                <label>Check-in</label>
-                <input type="date" name="checkin" min="<%= today %>" required />
-                
-                <label>Checkout</label>
-                <input type="date" name="checkout" min="<%= today %>" required />
-            </div>
-            
-    
+    <form action="/bookings/create" method="POST">
+        <input type="hidden" name="listingId" value="<%= listing._id %>">
+      
+        <div class="date-picker">
+            <label>Check-in</label>
+            <input type="date" id="checkin" name="checkin" min="<%= today %>" required>
+          
+            <label>Checkout</label>
+            <input type="date" id="checkout" name="checkout" min="<%= today %>" required>
+        </div>
+      
         <div class="guest-picker">
             <label>Guests</label>
-            <select>
-            <option>1 guest</option>
-            <option>2 guests</option>
-            <option>3 guests</option>
+            <select name="guests" required>
+                <option value="1">1 guest</option>
+                <option value="2">2 guests</option>
+                <option value="3">3 guests</option>
+                <option value="4">4 guests</option>
             </select>
         </div>
-    
-        <button type="submit" class="reserve-btn">Reserve</button>
-        <p class="disclaimer">You won't be charged yet</p>
-        </form>
-    
-        <div class="price-breakdown">
-        <div>
-            &#8377;<%= originalPrice.toLocaleString("en-IN") %> x <%= numberOfNights %> nights
-            <span>&#8377;<%= totalBeforeDiscount.toLocaleString("en-IN") %></span>
+          
+        <!-- Warning Message -->
+    <div class="alert alert-warning small mb-2">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+        CRYPTO PAYMENTS require a valid crypto wallet with supported coins (e.g., BTC, ETH). If you don’t have a wallet, please choose another payment method.</div>
+      
+        <div class="payment-method mb-3">
+          <label>Payment Method:</label>
+          <select name="paymentMethod" class="form-select" required>
+            <option value="cash">Cash (Pay on Arrival)</option>
+            <option value="upi">Razorpay (UPI, Cards, Wallets)</option>
+            <option value="crypto">Crypto (NowPayments)</option>
+          </select>
         </div>
-        <div>
-            Long stay discount
-            <span>-&#8377;<%= totalDiscount.toLocaleString("en-IN") %></span>
-        </div>
-        <div>
-            Airbnb service fee
-            <span>&#8377;<%= serviceFee.toLocaleString("en-IN") %></span>
-        </div>
-        <hr />
-        <div class="total">
-            Total <span>&#8377;<%= finalTotal.toLocaleString("en-IN") %></span>
-        </div>
-        </div>
+      
+        <button type="submit" class="btn btn-airbnb w-100 reserve-btn">Book This Stay</button>
+    </form>
+      
+
+    <div class="price-breakdown mt-3">
+      <div id="nights-display">Total nights: 0</div>
+      <div class="total">Total: <span id="total">&#8377;0</span></div>
     </div>
-  
+  </div>
+
 </div>
 
+<script>
+  const pricePerNight = <%= listing.price %>;
+
+  function calculateTotal() {
+    const checkin = new Date(document.getElementById("checkin").value);
+    const checkout = new Date(document.getElementById("checkout").value);
+
+    if (checkout > checkin) {
+      const nights = Math.ceil((checkout - checkin) / (1000 * 60 * 60 * 24));
+      const total = pricePerNight * nights;
+
+      document.getElementById("nights-display").innerText = `Total nights: ${nights}`;
+      document.getElementById("total").innerText = `₹${total.toLocaleString("en-IN")}`;
+    } else {
+      document.getElementById("nights-display").innerText = `Total nights: 0`;
+      document.getElementById("total").innerText = `₹0`;
+    }
+  }
+
+  document.getElementById("checkin").addEventListener("change", calculateTotal);
+  document.getElementById("checkout").addEventListener("change", calculateTotal);
+</script>
+
 <script src="/js/map.js"></script>
+
+<script>
+    const checkinInput = document.querySelector('input[name="checkin"]');
+    const checkoutInput = document.querySelector('input[name="checkout"]');
+    const reserveBtn = document.querySelector('.reserve-btn');
+  
+    function validateDates() {
+      const checkinDate = new Date(checkinInput.value);
+      const checkoutDate = new Date(checkoutInput.value);
+  
+      if (!checkinInput.value || !checkoutInput.value) {
+        reserveBtn.disabled = false;
+        return;
+      }
+  
+      const timeDiff = checkoutDate - checkinDate;
+      const numNights = timeDiff / (1000 * 60 * 60 * 24);
+  
+      // 1. Checkin should not be after or same as checkout
+      if (checkinDate >= checkoutDate) {
+        alert("Check-out must be after check-in date.");
+        reserveBtn.disabled = true;
+      }
+      // 2. Limit to 28 nights
+      else if (numNights > 28) {
+        alert("You can’t reserve for more than 28 nights.");
+        reserveBtn.disabled = true;
+      } else {
+        reserveBtn.disabled = false;
+      }
+    }
+  
+    checkinInput.addEventListener("change", validateDates);
+    checkoutInput.addEventListener("change", validateDates);
+  </script>
+  

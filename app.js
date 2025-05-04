@@ -29,9 +29,8 @@ const User = require("./models/user.js")
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-const paymentRoutes = require('./routes/payment');
+const bookingRoutes = require("./routes/bookings");
 
-app.use('/', paymentRoutes);
 
 
 const dbUrl = process.env.ATLASDB_URL;
@@ -81,7 +80,10 @@ const sessionOptions = {
     }
 };
 
-
+app.get("/", (req, res) => {
+    res.redirect("/listings"); // or render a homepage: res.render("home");
+  });
+  
 
 
 //root path
@@ -107,7 +109,7 @@ app.use((req, res, next) => {
     next();
 })
 
-//payment routes
+//policy routes
 const policyRoutes = require('./routes/policies');
 app.use('/', policyRoutes);
 
@@ -117,6 +119,10 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 //user Route
 app.use("/", userRouter)
+//payment routes
+app.use("/bookings", bookingRoutes);
+
+
 
 //a standard response for other routes
 app.all("*", (req, res, next)=> {
