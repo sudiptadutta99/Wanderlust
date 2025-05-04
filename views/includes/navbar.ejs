@@ -3,90 +3,111 @@
       background-color: #fe424d;
       color: #fff;
       border-radius: 25px;
-      padding: 0 1rem 0 1rem;
-  
+      padding: 0 1rem;
     }
-    .search-inp  {
+  
+    .search-inp {
       border-radius: 25px;
-      padding: 0.5rem 3rem 0.5rem 3rem;
+      padding: 0.5rem 3rem;
       font-size: 1rem;
+    }
+  
+    .brand-text {
+      color: #fe424d;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-left: 0.3rem;
+    }
+  
+    .navbar-container {
+      padding: 0 4rem;
+    }
+  
+    .nav-action-link {
+      margin-right: 1rem;
+      font-weight: 500;
+      color: #333;
+      text-decoration: none;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+    }
+  
+    .nav-action-link:hover {
+      color: #fe424d;
+      text-shadow: 0 0 5px #fe424d;
     }
   </style>
   
-  
   <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-        <button 
-          class="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarNavAltMarkup" 
+    <div class="container-fluid navbar-container">
+  
+      <!-- Logo + Wanderlust -->
+      <a class="navbar-brand d-flex align-items-center" href="/listings">
+        <i class="fa-regular fa-compass"></i>
+        <span class="brand-text">Wanderlust</span>
+      </a>
+  
+      <!-- Hamburger Toggle -->
+      <button 
+        class="navbar-toggler" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#navbarNavAltMarkup"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+  
+        <!-- Centered Search Bar -->
+        <form class="d-flex mx-auto" role="search" method="GET" action="/listings">
+          <input
+            class="form-control me-2 search-inp"
+            type="search"
+            name="search"
+            placeholder="Search Destinations"
           >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <button class="btn search-btn" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
   
+        <!-- Right-side actions + hamburger -->
+        <div class="d-flex align-items-center ms-auto">
+  
+          <!-- Explore & Wanderlust Your Home -->
+          <a href="/listings" class="nav-action-link">Explore</a>
+          <a href="/signup" class="nav-action-link">Wanderlust Your Home</a>
+  
+          <!-- Hamburger/Profile -->
           <div class="navbar-nav">
-            <a class="nav-link" href="/listings">Explore</a>
+            <% if (currUser) { %>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                <li><a class="dropdown-item" href="/listings/new">Create New Listing</a></li>
+                <li><a class="dropdown-item" href="/bookings">My Bookings</a></li>
+                <li><a class="dropdown-item" href="/account">My Account</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+              </ul>
+            </div>
+            <% } else { %>
+            <div class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="guestMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="guestMenu">
+                <li><a class="dropdown-item" href="/signup">Signup</a></li>
+                <li><a class="dropdown-item" href="/login">Login</a></li>
+              </ul>
+            </div>
+            <% } %>
           </div>
   
-          <!-- search bar -->
-          <form class="d-flex" role="search" method="GET" action="/listings">
-              <input
-                class="form-control me-2 search-inp"
-                type="search"
-                name="search"
-                placeholder="Search Destinations">
-              <button class="btn search-btn" type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
-            
-            
-  
-          <!-- Right-side Hamburger/Profile Dropdown -->
-          <div class="navbar-nav ms-auto">
-              <% if (currUser) { %>
-              <div class="nav-item dropdown">
-                  <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="userMenu"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  >
-                  <i class="fa-solid fa-bars"></i>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                  <li><a class="dropdown-item" href="/listings/new">Create New Listing</a></li>
-                  <li><a class="dropdown-item" href="/bookings">My Bookings</a></li>
-                  <li><a class="dropdown-item" href="/account">My Account</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                  </ul>
-              </div>
-              <% } else { %>
-              <div class="nav-item dropdown">
-                  <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="guestMenu"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  >
-                  <i class="fa-solid fa-bars"></i>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="guestMenu">
-                  <li><a class="dropdown-item" href="/signup">Signup</a></li>
-                  <li><a class="dropdown-item" href="/login">Login</a></li>
-                  </ul>
-              </div>
-              <% } %>
-          </div>
-    
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
+  
