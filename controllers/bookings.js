@@ -38,6 +38,12 @@ module.exports.createBooking = async (req, res) => {
     const nights =
         (checkoutDate.getTime() - checkinDate.getTime()) / (1000 * 60 * 60 * 24);
 
+        if (nights > 28) {
+            req.flash("error", "Cannot book for more than 28 nights.");
+            return res.redirect(`/listings/${listingId}`);
+        }
+        
+
     const totalPrice = listing.price * nights;
     const bookingId = `BOOK-${Math.floor(100000 + Math.random() * 900000)}`;
 
