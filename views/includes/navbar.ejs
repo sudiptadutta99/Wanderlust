@@ -76,7 +76,12 @@
   
           <!-- Explore & Wanderlust Your Home -->
           <a href="/listings" class="nav-action-link">Explore</a>
-          <a href="/signup" class="nav-action-link">Wanderlust Your Home</a>
+            <!-- Wanderlust Your Home Link -->
+        <a href="<%= currUser ? '/listings/new' : '/signup' %>" class="nav-action-link">
+            <%= currUser ? 'Create a New Listing' : 'Start Your Journey' %>
+        </a>
+
+
   
           <!-- Hamburger/Profile -->
           <div class="navbar-nav">
@@ -88,7 +93,7 @@
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                 <li><a class="dropdown-item" href="/listings/new">Create New Listing</a></li>
                 <li><a class="dropdown-item" href="/bookings">My Bookings</a></li>
-                <li><a class="dropdown-item" href="/account">My Account</a></li>
+                <!-- <li><a class="dropdown-item" href="/account">My Account</a></li> -->
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href="/logout">Logout</a></li>
               </ul>

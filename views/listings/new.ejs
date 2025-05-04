@@ -1,31 +1,38 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row">
-    <div class="cols-8 offset-2">
-        <h3>Create a new listing</h3>
-        <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+<div class="row mt-5">
+    <div class="col-8 offset-2">
+        <h3 class="text-center mb-4">Start Your Hosting Journey</h3>
+        <form method="POST" action="/listings" novalidate class="needs-validation shadow p-4 rounded bg-light" enctype="multipart/form-data">
+            
+            <!-- Title Input -->
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" name="listing[title]" placeholder="Add Catchy title" class="form-control" required>
+                <input type="text" name="listing[title]" placeholder="Add catchy title" class="form-control" required>
                 <div class="valid-feedback">Title looks good!</div>
             </div>
 
+            <!-- Description Textarea -->
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
                 <textarea name="listing[description]" placeholder="Enter description" class="form-control" required></textarea>
                 <div class="invalid-feedback">Please enter a short description</div>
             </div>
 
+            <!-- Image Upload -->
             <div class="mb-3">
                 <label for="image" class="form-label">Upload Listing Image</label>
                 <input type="file" name="listing[image]" class="form-control" required>
             </div>
 
             <div class="row">
+                <!-- Price Input -->
                 <div class="mb-3 col-md-4">
                     <label for="price" class="form-label">Price</label>
                     <input type="number" name="listing[price]" placeholder="Enter price" class="form-control" required>
                     <div class="invalid-feedback">Please enter a valid price</div>
                 </div>
+
+                <!-- Country Input -->
                 <div class="mb-3 col-md-8">
                     <label for="country" class="form-label">Country</label>
                     <input type="text" name="listing[country]" placeholder="Enter country" class="form-control" required>
@@ -33,13 +40,13 @@
                 </div>
             </div>
 
+            <!-- Location Input -->
             <div class="mb-3">
                 <label for="location" class="form-label">Location</label>
                 <input type="text" name="listing[location]" placeholder="Enter location" class="form-control" required>
                 <div class="invalid-feedback">Location should be valid</div>
             </div>
 
-            <!-- Category Dropdown -->
             <!-- Category Dropdown -->
             <div class="mb-3">
                 <label for="category" class="form-label">Category</label>
@@ -62,10 +69,9 @@
                     <option value="Apartments">Apartments</option>
                 </select>
             </div>
-            
 
-
-            <button class="btn btn-dark add-btn mt-3">Add</button>
+            <!-- Submit Button -->
+            <button class="btn btn-danger w-100 mt-3">Add Listing</button>
         </form>
     </div>
 </div>
