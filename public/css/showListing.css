@@ -109,4 +109,29 @@
     font-weight: bold;
     font-size: 1.1rem;
   }
+  .star-rating {
+    direction: rtl;
+    display: inline-flex;
+    justify-content: flex-start;
+  }
+  
+  .star-rating input[type="radio"] {
+    display: none;
+  }
+  
+  .star-rating label {
+    color: #ddd;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .star-rating label:hover,
+  .star-rating input[type="radio"]:checked ~ label {
+    color: #ffc107;
+  }
+  
+  .star-rating .filled {
+    color: #ffc107;
+  }
   

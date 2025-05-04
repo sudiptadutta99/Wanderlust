@@ -80,7 +80,10 @@ const sessionOptions = {
     }
 };
 
-
+app.get("/", (req, res) => {
+    res.redirect("/listings"); // or render a homepage: res.render("home");
+  });
+  
 
 
 //root path

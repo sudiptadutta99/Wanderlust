@@ -80,7 +80,7 @@ module.exports.createBooking = async (req, res) => {
             'https://api.nowpayments.io/v1/invoice',
             {
                 price_amount: totalPrice,
-                price_currency: 'usd',
+                price_currency: 'inr',
                 pay_currency: 'eth',
                 order_description: 'Payment for Wanderbnb Booking',
             },

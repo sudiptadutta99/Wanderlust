@@ -87,39 +87,60 @@
     </div>
 
     <!-- Reviews -->
-    <% if(currUser) { %>
-      <hr />
-      <h4>Leave a review</h4>
-      <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
-        <div class="mb-3">
-          <label class="form-label">Rating</label>
-          <fieldset class="starability-slot"></fieldset>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Comments</label>
-          <textarea name="review[comment]" class="form-control" required></textarea>
-          <div class="invalid-feedback">Please add some comments</div>
-        </div>
-        <button class="btn btn-outline-dark">Submit</button>
-      </form>
-      <hr />
-    <% } %>
-
-    <% if(listing.reviews.length > 0) { %>
-      <h4>All Reviews</h4>
-      <% for(let review of listing.reviews) { %>
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5>@<%= review.author.username %></h5>
-            <p data-rating="<%= review.rating %>"></p>
-            <p><%= review.comment %></p>
-            <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-              <button class="btn btn-sm btn-dark">Delete</button>
+        <% if(currUser) { %>
+            <hr />
+            <h4>Leave a review</h4>
+            <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label class="form-label">Rating</label>
+                <div class="star-rating">
+                <% for (let i = 5; i >= 1; i--) { %>
+                    <input type="radio" id="star<%= i %>" name="review[rating]" value="<%= i %>" required />
+                    <label for="star<%= i %>" title="<%= i %> stars">
+                    <i class="fas fa-star"></i>
+                    </label>
+                <% } %>
+                </div>
+            </div>
+        
+            <div class="mb-3">
+                <label class="form-label">Comments</label>
+                <textarea name="review[comment]" class="form-control" required></textarea>
+                <div class="invalid-feedback">Please add some comments</div>
+            </div>
+            <button class="btn btn-outline-dark">Submit</button>
             </form>
-          </div>
-        </div>
-      <% } %>
-    <% } %>
+            <hr />
+        <% } %>
+        
+        <% if(listing.reviews.length > 0) { %>
+            <h4>All Reviews</h4>
+            <% for (let review of listing.reviews) { %>
+            <div class="card mb-3">
+                <div class="card-body">
+                <h5>@<%= review.author.username %></h5>
+        
+                <!-- Display Rating -->
+                <div class="star-rating">
+                    <% for (let i = 5; i >= 1; i--) { %>
+                    <i class="fas fa-star <%= review.rating >= i ? 'filled' : '' %>"></i>
+                    <% } %>
+                </div>
+        
+                <!-- Review Comment -->
+                <p><%= review.comment %></p>
+        
+                <!-- Delete Button (if the review belongs to current user) -->
+                <% if(currUser && currUser._id.toString() === review.author._id.toString()) { %>
+                    <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                    <button class="btn btn-sm btn-dark">Delete</button>
+                    </form>
+                <% } %>
+                </div>
+            </div>
+            <% } %>
+        <% } %>
+  
   </div>
 
   <!-- RIGHT: Booking Section -->
@@ -150,13 +171,17 @@
             </select>
         </div>
           
+        <!-- Warning Message -->
+    <div class="alert alert-warning small mb-2">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+        CRYPTO PAYMENTS require a valid crypto wallet with supported coins (e.g., BTC, ETH). If you don’t have a wallet, please choose another payment method.</div>
       
         <div class="payment-method mb-3">
           <label>Payment Method:</label>
           <select name="paymentMethod" class="form-select" required>
-            <option value="cash">Cash</option>
-            <option value="upi">UPI</option>
-            <option value="crypto">Crypto</option>
+            <option value="cash">Cash (Pay on Arrival)</option>
+            <option value="upi">Razorpay (UPI, Cards, Wallets)</option>
+            <option value="crypto">Crypto (NowPayments)</option>
           </select>
         </div>
       
