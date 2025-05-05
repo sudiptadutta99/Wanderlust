@@ -4,140 +4,154 @@
 
 ## Project Overview
 
-Wanderlust is a comprehensive web-based platform designed to facilitate the exploration, review, and booking of accommodations worldwide. It offers users an intuitive interface to discover listings, read and write reviews, and securely pay for bookings using cryptocurrency. The platform integrates advanced location-based services to enhance the user experience.
+Wanderlust is a full-stack booking platform allowing users to explore global listings, book stays, post reviews, and pay securely using **crypto**, **UPI (Razorpay)**, or **cash**. It features interactive maps, robust validation, and responsive design for seamless travel planning.
 
 ---
 
 ## 🚀 Features
 
 ### 🔐 User Authentication & Authorization
+- Secure login/signup via Passport.js (Local Strategy)
+- MongoDB-backed session management
+- Logged-in users can manage bookings, listings, and reviews
 
-* Secure login and registration using Passport.js
-* Session management backed by MongoDB
-* Users can log in, register, and manage their listings and reviews securely
+### 🏠 Listings Management
+- Browse, filter, and search all accommodations
+- Add, edit, delete listings with title, images, price, location
+- Category filter with 15 themed icons
+- Integrated **Mapbox** for location tagging and suggestions
 
-### 🔍 Listings Management
+### 📅 Bookings System
+- Users can book listings with selected check-in/check-out dates
+- Booking confirmation page with details
+- View all personal bookings on **My Bookings** page
 
-* Browse all listings with filters and search
-* Create, edit, and delete accommodations
-* Each listing includes title, description, price, images, category, and geolocation
-* Category filter UI includes **15 red-highlighted icons**
-
-### 🌍 Map Integration
-
-* Listings displayed on interactive map
-* Powered by **Mapbox API** for geolocation and search suggestions
-
-### 💳 Cryptocurrency Payments
-
-* Integrated with **NOWPayments API** for crypto transactions
-* Users can book listings and pay using cryptocurrencies like BTC, ETH, etc.
+### 💳 Unified Payment Integration
+- Select between **Cash**, **UPI**, or **Crypto** on checkout
+- UPI payments processed securely via **Razorpay**
+- Crypto payments handled using **NOWPayments API**
 
 ### 📝 Reviews System
-
-* Logged-in users can add reviews (rating + comment)
-* Reviews are editable and deletable by the review author
+- Add, edit, or delete reviews with rating & comment
+- Reviews visible on each listing’s detail page
 
 ### 🧾 Validation & Error Handling
+- Joi used for backend validation of forms
+- Centralized custom error handling via Express middleware
 
-* Robust form validation using **Joi**
-* Clean error messaging and fallbacks via custom Express error handler
-
-### 📱 Responsive UI
-
-* Clean layout built with **EJS**, **Bootstrap 5**, and custom **CSS**
-* Optimized for mobile and desktop
+### 🌐 Responsive UI
+- Clean layout using **EJS**, **Bootstrap 5**, and custom CSS
+- Fully responsive on mobile and desktop devices
 
 ---
 
 ## 🛠️ Tech Stack
 
 **Frontend:**
-
-* HTML, CSS, JavaScript
-* Bootstrap 5, EJS Templating
+- HTML, CSS, JavaScript
+- Bootstrap 5, EJS Templating
 
 **Backend:**
-
-* Node.js, Express.js
-* MongoDB, Mongoose
-* Cloudinary (image uploads)
-* Mapbox API (location search and maps)
-* NOWPayments API (crypto payment processing)
+- Node.js, Express.js
+- MongoDB, Mongoose
+- Cloudinary (image hosting)
+- Mapbox API (location services)
+- Razorpay (UPI payments)
+- NOWPayments API (crypto payments)
 
 **Authentication:**
-
-* Passport.js (Local Strategy)
-* MongoDB-based sessions using connect-mongo
+- Passport.js (Local Strategy)
+- connect-mongo for session storage
 
 **Validation:**
-
-* Joi for form and schema validation
+- Joi for form & data schema validation
 
 ---
 
 ## 📁 Project Structure
 
 ```
-wanderlust/
+
+majorproject/
 ├── app.js                      # Main Express app
-├── .env                        # Environment variables
-├── package.json               # NPM dependencies and scripts
-├── schema.js                  # Joi validation schemas
-├── middleware.js              # Custom middleware (auth, validation, etc.)
 ├── cloudConfig.js             # Cloudinary configuration
+├── middleware.js              # Auth, validation, error middleware
+├── schema.js                  # Joi schemas
+├── package.json               # Project metadata & dependencies
+├── README.md                  # Main project README
+├── README\_COMPREHENSIVE.md    # Extended documentation
+├── init/                      # Seed data & init scripts
+│   ├── data.js
+│   └── index.js
+├── controllers/               # Route logic
+│   ├── bookings.js
+│   ├── listings.js
+│   ├── payment.js
+│   ├── reviews.js
+│   └── users.js
+├── models/                    # Mongoose schemas
+│   ├── booking.js
+│   ├── listing.js
+│   ├── review\.js
+│   └── user.js
+├── routes/                    # Express routes
+│   ├── bookings.js
+│   ├── listing.js
+│   ├── payment.js
+│   ├── policies.js
+│   ├── review\.js
+│   └── user.js
 ├── utils/
-│   ├── ExpressError.js        # Custom error class
-│   ├── catchAsync.js          # Async error wrapper
-│   └── wrapAsync.js           # Middleware wrapper
-├── controllers/
-│   ├── listings.js            # Listing logic
-│   └── payment.js             # Crypto/Stripe payment logic
-├── models/
-│   ├── listing.js             # Mongoose schema for listings
-│   ├── review.js              # Mongoose schema for reviews
-│   └── user.js                # Mongoose schema for users
-├── routes/
-│   ├── listing.js             # Listings routes
-│   ├── review.js              # Review routes
-│   ├── user.js                # Auth routes
-│   └── payment.js             # Crypto payment route
-├── views/
-│   ├── includes/
-│   │   ├── navbar.ejs
-│   │   └── footer.ejs
-│   ├── listings/
-│   │   ├── index.ejs
-│   │   ├── new.ejs
-│   │   ├── edit.ejs
-│   │   └── show.ejs
-│   ├── reviews/
-│   │   └── reviewForm.ejs
-│   └── users/
-│       ├── login.ejs
-│       └── register.ejs
-├── public/
+│   ├── ExpressError.js
+│   └── wrapAsync.js
+├── public/                    # Static assets
 │   ├── css/
-│   │   ├── style.css
+│   │   ├── footer.css
+│   │   ├── rating.css
 │   │   ├── showListing.css
-│   │   └── footer.css
+│   │   └── style.css
 │   └── js/
 │       ├── map.js
 │       └── script.js
-├── README.md
-├── README_COMPREHENSIVE.md
-```
+└── views/                     # EJS templates
+    ├── bookings/
+    │   ├── confirmation.ejs
+    │   └── index.ejs
+    ├── error.ejs
+    ├── includes/
+    │   ├── flash.ejs
+    │   ├── footer.ejs
+    │   └── navbar.ejs
+    ├── layouts/
+    │   └── boilerplate.ejs
+    ├── listings/
+    │   ├── edit.ejs
+    │   ├── index.ejs
+    │   ├── new\.ejs
+    │   └── show\.ejs
+    ├── payments/
+    │   └── razorpay.ejs
+    ├── policies/
+    │   ├── contactUs.ejs
+    │   ├── privacyPolicy.ejs
+    │   ├── refundPolicy.ejs
+    │   ├── shippingPolicy.ejs
+    │   └── termsAndConditions.ejs
+└── users/
+├── login.ejs
+└── signup.ejs
+
+````
 
 ---
 
 ## 🔧 Installation and Setup
 
-1. **Clone the repository**
-
+1. **Clone the repo**
 ```bash
-git clone https://github.com/yourusername/wanderlust.git
+git clone https://github.com/sudiptadutta99/Wanderlust.git
 cd wanderlust
-```
+````
 
 2. **Install dependencies**
 
@@ -145,73 +159,74 @@ cd wanderlust
 npm install
 ```
 
-3. **Set up environment variables**
-   Create a `.env` file in the root directory with:
+3. **Configure environment variables**
 
-```env
+Create a `.env` file in the root directory with:
+
+```
 MAP_TOKEN=your_mapbox_token
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_KEY=your_api_key
 CLOUDINARY_SECRET=your_api_secret
 NOWPAYMENTS_API_KEY=your_nowpayments_key
-STRIPE_SECRET_KEY=your_stripe_key
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 ATLASDB_URL=your_mongodb_url
 SECRET=your_cookie_secret
 NODE_ENV=development
 ```
 
-4. **Run the application locally**
+4. **Run the app**
 
 ```bash
 nodemon app.js
 ```
 
-Visit: `http://localhost:8080/listings`
-
----
-
-## 📦 Deployment
-
-* Deployed on **Render** using manual GitHub deployment
-* Push updates to the `main` branch and trigger redeployment on Render dashboard
+Visit: [http://localhost:8080/listings](http://localhost:8080/listings)
 
 ---
 
 ## ✅ Usage Guide
 
-* Visit `/listings` to view all listings
-* Use the category filter to explore 15 themed listing types
-* Log in to create, edit, delete listings and leave reviews
-* Use the map to explore nearby stays
-* Pay securely with crypto through the listing page
+* Browse all listings at `/listings`
+* Use filters or map to find accommodations
+* Click a listing to book — choose Cash, UPI, or Crypto
+* View all your bookings at `/bookings`
+* Leave reviews for listings you stayed at
 
 ---
 
 ## 🧪 Testing
 
-* Manual testing of key user flows (CRUD, payment, auth, review)
-* Form validation using Joi
-* Map coordinates and search tested using Mapbox
+* Manual testing of major flows (auth, bookings, payments)
+* Backend validation via Joi
+* Payment success/failure simulation using Razorpay test mode
 
 ---
 
 ## ✨ Future Improvements
 
-* Wishlist or favorites feature
-* Admin dashboard for listing/user moderation
-* Email verification and password reset
-* Mobile UI enhancements and accessibility improvements
+* Wishlist & favorites feature
+* Admin dashboard for user/listing moderation
+* Email OTP verification and password reset
+* Booking cancellation & refund workflows
+* Unit testing for routes & models
 
 ---
 
 ## 🧑‍💻 Developer
 
-* Built by [Sudipta Dutta](https://github.com/sudiptadutta99)
-
-Feel free to reach out for collaboration or questions!
+Made with ❤️ by [Sudipta Dutta](https://github.com/sudiptadutta99)
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+MIT License – see `LICENSE` for full details.
+
+```
+
+---
+
+Would you like a matching update for `README_COMPREHENSIVE.md` as well?
+```
