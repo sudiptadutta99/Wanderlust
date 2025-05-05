@@ -130,7 +130,7 @@ body {
     width: 90vh;
 }
 
-.btn-airbnb {
+.btn-wanderlust {
     background-color: #fe424d !important;
     color: white !important;
     border: none;
@@ -142,12 +142,12 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.btn-airbnb:hover {
+.btn-wanderlust:hover {
     background-color: #e03a42;
     transform: translateY(-1px);
 }
 
-.btn-airbnb:active {
+.btn-wanderlust:active {
     transform: scale(0.98);
     box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
