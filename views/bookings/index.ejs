@@ -16,6 +16,15 @@
                 <div class="card-body">
                   <h5 class="card-title"><%= booking.listing.title %></h5>
                   <p class="card-text">
+                    <strong>Booking ID:</strong> 
+                    <span id="booking-id-<%= booking._id %>"><%= booking._id %></span>
+                    <button 
+                      class="btn btn-sm btn-light border ms-2" 
+                      onclick="copyToClipboard('<%= booking._id %>')">
+                      Copy
+                    </button>
+                    <br>
+
                     <strong>Check-in:</strong> <%= booking.checkin.toDateString() %><br>
                     <strong>Check-out:</strong> <%= booking.checkout.toDateString() %><br>
                     <strong>Guests:</strong> <%= booking.guests %><br>
@@ -33,3 +42,11 @@
 </div>
 
 
+<script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Booking ID copied to clipboard!");
+      });
+    }
+</script>
+  
