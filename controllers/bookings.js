@@ -22,6 +22,7 @@ module.exports.createBooking = async (req, res) => {
     // ❗ Prevent double bookings
     const overlapping = await Booking.findOne({
         listing: listingId,
+        status: { $ne: 'cancelled' }, // 🔑 exclude cancelled bookings
         $or: [
             {
                 checkin: { $lt: checkoutDate },
@@ -29,6 +30,7 @@ module.exports.createBooking = async (req, res) => {
             }
         ]
     });
+    
 
     if (overlapping) {
         req.flash("error", "This listing is already booked for the selected dates.");
@@ -115,25 +117,26 @@ module.exports.getAllBookings = async (req, res) => {
 module.exports.cancelBooking = async (req, res) => {
     const { id } = req.params;
     const booking = await Booking.findById(id);
-
+  
     if (!booking) {
-        req.flash("error", "Booking not found.");
-        return res.redirect("/bookings");
+      req.flash("error", "Booking not found.");
+      return res.redirect("/bookings");
     }
-
-    // Optional: check ownership
+  
     if (!booking.user.equals(req.user._id)) {
-        req.flash("error", "Unauthorized cancellation.");
-        return res.redirect("/bookings");
+      req.flash("error", "Unauthorized cancellation.");
+      return res.redirect("/bookings");
     }
-
-    await Booking.findByIdAndDelete(id);
-
+  
+    booking.status = 'cancelled';
+    await booking.save();
+  
     if (booking.paymentMethod === "upi" || booking.paymentMethod === "crypto") {
-        req.flash("success", "Booking cancelled. Refund will be initiated within 7-8 business days.");
+      req.flash("success", "Booking cancelled. Refund will be initiated within 7-8 business days.");
     } else {
-        req.flash("success", "Booking cancelled successfully.");
+      req.flash("success", "Booking cancelled successfully.");
     }
-
+  
     res.redirect("/bookings");
-};
+  };
+  

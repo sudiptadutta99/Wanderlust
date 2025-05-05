@@ -43,6 +43,12 @@ const bookingSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    status: {
+        type: String,
+        enum: ['confirmed', 'cancelled'],
+        default: 'confirmed',
+      }
+      
 });
 
 module.exports = mongoose.model("Booking", bookingSchema);

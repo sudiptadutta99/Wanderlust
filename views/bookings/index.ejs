@@ -29,12 +29,24 @@
                     <strong>Check-out:</strong> <%= booking.checkout.toDateString() %><br>
                     <strong>Guests:</strong> <%= booking.guests %><br>
                     <strong>Total Price:</strong> ₹<%= booking.totalPrice %><br>
-                    <strong>Status:</strong> <%= booking.paymentStatus %>
+                    <strong>Status:</strong>
+                        <% if (booking.status === 'cancelled') { %>
+                        <span class="badge bg-danger text-uppercase">Cancelled</span>
+                        <% } else { %>
+                        <span class="badge bg-success text-uppercase"><%= booking.paymentStatus %></span>
+                        <% } %>
+
+
                   </p>
                   <a href="/listings/<%= booking.listing._id %>" class="btn btn-outline-primary">View Listing</a>
-                  <form method="POST" action="/bookings/<%= booking._id %>?_method=DELETE" onsubmit="return confirmCancel('<%= booking.paymentMethod %>')">
-                    <button class="btn btn-outline-danger mt-2">Cancel Booking</button>
-                  </form>
+                  <% if (booking.status !== 'cancelled') { %>
+                    <form method="POST" action="/bookings/<%= booking._id %>?_method=PUT" onsubmit="return confirmCancel('<%= booking.paymentMethod %>')">
+                      <button class="btn btn-outline-danger mt-2">Cancel Booking</button>
+                    </form>
+                  <% } else { %>
+                    <p class="text-danger mt-2"><em>This booking has been cancelled.</em></p>
+                  <% } %>
+                  
                   
                 </div>
               </div>
