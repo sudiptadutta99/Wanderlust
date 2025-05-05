@@ -11,5 +11,6 @@ router.get("/:id/confirmation", isLoggedIn, bookingController.bookingConfirmatio
 // Show all bookings for the logged-in user
 router.get("/", isLoggedIn, bookingController.getAllBookings);
 
+router.delete("/:id", isLoggedIn, bookingController.cancelBooking);
 
 module.exports = router;

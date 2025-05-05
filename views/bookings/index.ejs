@@ -32,6 +32,10 @@
                     <strong>Status:</strong> <%= booking.paymentStatus %>
                   </p>
                   <a href="/listings/<%= booking.listing._id %>" class="btn btn-outline-primary">View Listing</a>
+                  <form method="POST" action="/bookings/<%= booking._id %>?_method=DELETE" onsubmit="return confirmCancel('<%= booking.paymentMethod %>')">
+                    <button class="btn btn-outline-danger mt-2">Cancel Booking</button>
+                  </form>
+                  
                 </div>
               </div>
             </div>
@@ -49,4 +53,19 @@
       });
     }
 </script>
+  
+<script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Booking ID copied to clipboard!");
+      });
+    }
+  
+    function confirmCancel(method) {
+      if (method === 'upi' || method === 'crypto') {
+        return confirm("Are you sure? Refunds for online payments will be initiated within 7-8 days.");
+      }
+      return confirm("Are you sure you want to cancel this booking?");
+    }
+  </script>
   

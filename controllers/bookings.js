@@ -109,3 +109,31 @@ module.exports.getAllBookings = async (req, res) => {
     const bookings = await Booking.find({ user: req.user._id }).populate("listing");
     res.render("bookings/index", { bookings });
 };
+
+
+//cancel boooking
+module.exports.cancelBooking = async (req, res) => {
+    const { id } = req.params;
+    const booking = await Booking.findById(id);
+
+    if (!booking) {
+        req.flash("error", "Booking not found.");
+        return res.redirect("/bookings");
+    }
+
+    // Optional: check ownership
+    if (!booking.user.equals(req.user._id)) {
+        req.flash("error", "Unauthorized cancellation.");
+        return res.redirect("/bookings");
+    }
+
+    await Booking.findByIdAndDelete(id);
+
+    if (booking.paymentMethod === "upi" || booking.paymentMethod === "crypto") {
+        req.flash("success", "Booking cancelled. Refund will be initiated within 7-8 business days.");
+    } else {
+        req.flash("success", "Booking cancelled successfully.");
+    }
+
+    res.redirect("/bookings");
+};
