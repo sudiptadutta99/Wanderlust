@@ -80,52 +80,73 @@ Wanderlust is a comprehensive web-based platform designed to facilitate the expl
 
 ```
 wanderlust/
-├── app.js                      # Main Express app
-├── .env                        # Environment variables
-├── package.json               # NPM dependencies and scripts
-├── schema.js                  # Joi validation schemas
-├── middleware.js              # Custom middleware (auth, validation, etc.)
-├── cloudConfig.js             # Cloudinary configuration
-├── utils/
-│   ├── ExpressError.js        # Custom error class
-│   ├── catchAsync.js          # Async error wrapper
-│   └── wrapAsync.js           # Middleware wrapper
-├── controllers/
-│   ├── listings.js            # Listing logic
-│   └── payment.js             # Crypto/Stripe payment logic
-├── models/
-│   ├── listing.js             # Mongoose schema for listings
-│   ├── review.js              # Mongoose schema for reviews
-│   └── user.js                # Mongoose schema for users
-├── routes/
-│   ├── listing.js             # Listings routes
-│   ├── review.js              # Review routes
-│   ├── user.js                # Auth routes
-│   └── payment.js             # Crypto payment route
-├── views/
-│   ├── includes/
-│   │   ├── navbar.ejs
-│   │   └── footer.ejs
-│   ├── listings/
-│   │   ├── index.ejs
-│   │   ├── new.ejs
-│   │   ├── edit.ejs
-│   │   └── show.ejs
-│   ├── reviews/
-│   │   └── reviewForm.ejs
-│   └── users/
-│       ├── login.ejs
-│       └── register.ejs
-├── public/
+├── app.js                          # Main application entry point
+├── cloudConfig.js                 # Cloud configuration (e.g., Cloudinary)
+├── middleware.js                 # Custom middleware
+├── package.json                  # Project metadata and dependencies
+├── package-lock.json             # Dependency lock file
+├── README.md                     # Project documentation
+├── README_COMPREHENSIVE.md       # Extended project documentation
+├── schema.js                    # Joi validation schemas
+├── init/                        # Initialization scripts
+│   ├── data.js
+│   └── index.js
+├── controllers/                 # Route controllers
+│   ├── bookings.js
+│   ├── listings.js
+│   ├── reviews.js
+│   └── users.js
+├── models/                      # Mongoose models
+│   ├── booking.js
+│   ├── listing.js
+│   ├── review.js
+│   └── user.js
+├── routes/                      # Express route definitions
+│   ├── bookings.js
+│   ├── listing.js
+│   ├── policies.js
+│   ├── review.js
+│   └── user.js
+├── utils/                       # Utility modules
+│   ├── ExpressError.js
+│   └── wrapAsync.js
+├── public/                      # Public static assets
 │   ├── css/
-│   │   ├── style.css
+│   │   ├── footer.css
+│   │   ├── rating.css
 │   │   ├── showListing.css
-│   │   └── footer.css
+│   │   └── style.css
 │   └── js/
 │       ├── map.js
 │       └── script.js
-├── README.md
-├── README_COMPREHENSIVE.md
+└── views/                       # EJS view templates
+    ├── bookings/
+    │   ├── confirmation.ejs
+    │   └── index.ejs
+    ├── error.ejs
+    ├── includes/
+    │   ├── flash.ejs
+    │   ├── footer.ejs
+    │   └── navbar.ejs
+    ├── layouts/
+    │   └── boilerplate.ejs
+    ├── listings/
+    │   ├── edit.ejs
+    │   ├── index.ejs
+    │   ├── new.ejs
+    │   └── show.ejs
+    ├── payments/
+    │   └── razorpay.ejs
+    ├── policies/
+    │   ├── contactUs.ejs
+    │   ├── privacyPolicy.ejs
+    │   ├── refundPolicy.ejs
+    │   ├── shippingPolicy.ejs
+    │   └── termsAndConditions.ejs
+    └── users/
+        ├── login.ejs
+        └── signup.ejs
+
 ```
 
 ---
