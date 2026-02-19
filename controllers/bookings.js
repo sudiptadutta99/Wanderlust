@@ -1,36 +1,4 @@
-const Booking = require("../models/booking");
-const Listing = require("../models/listing");
-const Razorpay = require("razorpay");
 
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
-
-module.exports.createBooking = async (req, res) => {
-    const { listingId, checkin, checkout, guests, paymentMethod } = req.body;
-    const listing = await Listing.findById(listingId);
-
-    const checkinDate = new Date(checkin);
-    const checkoutDate = new Date(checkout);
-
-    if (checkoutDate <= checkinDate) {
-        req.flash("error", "Checkout must be after check-in.");
-        return res.redirect(`/listings/${listingId}`);
-    }
-
-    // ❗ Prevent double bookings
-    const overlapping = await Booking.findOne({
-        listing: listingId,
-        status: { $ne: 'cancelled' }, // 🔑 exclude cancelled bookings
-        $or: [
-            {
-                checkin: { $lt: checkoutDate },
-                checkout: { $gt: checkinDate }
-            }
-        ]
-    });
-    
 
     if (overlapping) {
         req.flash("error", "This listing is already booked for the selected dates.");
